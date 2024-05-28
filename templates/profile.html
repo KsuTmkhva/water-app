@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title %} Profile {% endblock %}
+{% block main %}
+<form action="/profile" method="POST">
+	<main class="profile">
+		<h2>{{ user_login }}</h2>
+		<div class="gender">
+			<p>Gender: {{ user_gender }}</p>
+		</div>
+		<p>Weight: {{ user_weight }}</p>
+            <div><button class="save" name="change">To change the data</button></div>
+		 <div><a href="/logout" class="logout-button">Log out</a></div>
+	</main>
+	</form>
+{% endblock %}

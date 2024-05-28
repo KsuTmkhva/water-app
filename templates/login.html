@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+	<link rel="stylesheet" type="text/css" href="static/styles.css">
+</head>
+<body class="signup">
+        {% if get_flashed_messages() %}
+		<div class="flash">
+			{{ get_flashed_messages() | join(" ") }}
+		</div>
+		{% endif %}
+    <div class = "quote3"><p>A<br>healthy<br>outside </p></div>
+	<div class = "quote4"><p>starts<br>from<br>the<br>inside</p></div>
+    <div class = "login">
+        <h1>Welcome back!</h1>
+        <form method="POST" action="/login">
+            <div><label class = "log1">Login</label>
+                <input type="text" name="login" placeholder="Enter your login" required></div>
+                <div><label>Password</label>
+                    <input type="password" name="password" placeholder="Enter your password" required></div>
+                    <button type="submit">Log in</button>
+            </form>
+            <p>Don’t have an account? <a class="signup-link" href="/signup">Sign up</a></p>
+        </div>
+        </body>
+</html>

@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %} Water {% endblock %}
+{% block main %}
+
+<main class="water">
+
+    {% block content %}
+    <p>Today you drank</p>
+    <h2>{{ total_volume }}/{{ water }}</h2>
+    {% endblock %}
+    <form action="/" method="POST">
+        <div>
+            <input class="amount" type="number" name="water-intake" placeholder="Enter amount in ml" required>
+        </div>
+    </form>
+    <form action="/" method="POST">
+        <button type="submit" name="plus-ml" value="100" class="ml-button">+100 ml</button>
+    </form>
+    <form action="/" method="POST">
+            <button type="submit" name="return" id="returnButton">Return</button>
+        </form>
+</main>
+{% endblock %}

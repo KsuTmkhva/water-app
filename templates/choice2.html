@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Personal data</title>
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+</head>
+<body class="main">
+    <form action="/choice2" method="POST">
+        <h1>Choose your gender</h1>
+        <div class="gender">
+            <select name="gender" class="gender-select">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Non binary">Non binary</option>
+            </select>
+        </div>
+        <h1>Enter your weight</h1>
+        <div>
+            <input class="amount" type="number" name="weight" placeholder="Enter" required>
+        </div>
+        <div style="margin-top: 90px;">
+            <button type="submit" name="go" class="logout-button">Save</button>
+        </div>
+    </form>
+</body>
+</html>
