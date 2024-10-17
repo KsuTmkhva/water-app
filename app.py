@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request, redirect, session, flash, jsonify
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -133,25 +132,10 @@ def chart():
 
 @app.route('/chart_data_daily', methods=['GET'])
 def chart_data_daily():
+    water_statistic = db.execute(
+        "SELECT strftime('%w', datetime) as day_of_week, SUM(volume) as total_volume FROM water WHERE id_user = ? GROUP BY day_of_week ORDER BY day_of_week",
+        session['user_id'])
 
-    # Fake
-    water_statistic = [
-        {'day_of_week': '0', 'total_volume': 100},
-        {'day_of_week': '1', 'total_volume': 150},
-        {'day_of_week': '2', 'total_volume': 200},
-        {'day_of_week': '3', 'total_volume': 250},
-        {'day_of_week': '4', 'total_volume': 300},
-        {'day_of_week': '5', 'total_volume': 350},
-        {'day_of_week': '6', 'total_volume': 400}
-    ]
-    # Fake
-
-    # Real
-    # water_statistic = db.execute(
-    #     "SELECT strftime('%w', datetime) as day_of_week, SUM(volume) as total_volume FROM water WHERE id_user = ? GROUP BY day_of_week ORDER BY day_of_week",
-    #     session['user_id'])
-
-    # Real
 
     day_map = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
@@ -174,38 +158,16 @@ def chart_data_daily():
 
 @app.route('/chart_data_montly', methods=['GET'])
 def chart_data_montly():
-    #Fake
-    water_statistic = [
-        {'month': 'January', 'total_volume': 500},
-        {'month': 'February', 'total_volume': 600},
-        {'month': 'March', 'total_volume': 700},
-        {'month': 'April', 'total_volume': 800},
-        {'month': 'May', 'total_volume': 900},
-        {'month': 'June', 'total_volume': 1000},
-        {'month': 'July', 'total_volume': 1100},
-        {'month': 'August', 'total_volume': 1200},
-        {'month': 'September', 'total_volume': 1300},
-        {'month': 'October', 'total_volume': 1400},
-        {'month': 'November', 'total_volume': 1500},
-        {'month': 'December', 'total_volume': 1600}
-    ]
+    water_statistic = db.execute(
+        "SELECT strftime('%m', datetime) as month, SUM(volume) as total_volume FROM water WHERE id_user = ? GROUP BY month ORDER BY month",
+        session.get('user_id'))
 
-    labels = [data['month'] for data in water_statistic]
+    # Map months for display
+    month_map = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+                 'November', 'December']
+
+    labels = [month_map[int(data['month']) - 1] for data in water_statistic]
     data_points = [data['total_volume'] for data in water_statistic]
-    # Fake
-
-    #Real
-    # water_statistic = db.execute(
-    #     "SELECT strftime('%m', datetime) as month, SUM(volume) as total_volume FROM water WHERE id_user = ? GROUP BY month ORDER BY month",
-    #     session.get('user_id'))
-    #
-    # # Map months for display
-    # month_map = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
-    #              'November', 'December']
-    #
-    # labels = [month_map[int(data['month']) - 1] for data in water_statistic]
-    # data_points = [data['total_volume'] for data in water_statistic]
-    #Real
 
     data = {
         'labels': labels,
